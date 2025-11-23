@@ -210,3 +210,42 @@ var user2 = {
     isHero: true
 };
 console.log(user2);
+var product1 = {
+    id: 1,
+    name: 'Laptop',
+    price: 50000,
+    isAvailable: true
+};
+console.log(product1);
+//------------------------enum data type--------------------------
+var Direction1;
+(function (Direction1) {
+    Direction1["Up"] = "1";
+    Direction1["Down"] = "2";
+    Direction1["Left"] = "3";
+    Direction1["Right"] = "4";
+})(Direction1 || (Direction1 = {}));
+var dir = Direction1.Left;
+console.log(dir);
+var Roles;
+(function (Roles) {
+    Roles[Roles["admin"] = 0] = "admin";
+    Roles[Roles["manager"] = 1] = "manager";
+    Roles[Roles["developer"] = 2] = "developer";
+    Roles[Roles["user"] = 3] = "user";
+})(Roles || (Roles = {}));
+var userRole = Roles.admin;
+console.log(userRole);
+//------------------------classes in typescript--------------------------
+var Person = /** @class */ (function () {
+    function Person(id, name) {
+        this.id = id;
+        this.name = name;
+    }
+    Person.prototype.display = function () {
+        console.log("ID: ".concat(this.id, ", Name: ").concat(this.name));
+    };
+    return Person;
+}());
+var person1 = new Person(1, 'Harshit Wadichar');
+person1.display();

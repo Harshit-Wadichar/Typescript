@@ -280,3 +280,62 @@ var user2:user2={
 };
 console.log(user2);
 
+//------------------------type in typescript--------------------------
+type Product={
+    id:number;
+    name:string;
+    price:number;
+    isAvailable?:boolean;
+}
+
+type DiscountedProduct={
+    discountPercentage:number;
+}
+type SpecialProduct=Product & DiscountedProduct;
+
+var product1:Product={
+    id:1,
+    name:'Laptop',
+    price:50000,
+    isAvailable:true
+};
+console.log(product1);
+
+
+//------------------------enum data type--------------------------
+enum Direction1{
+    Up="1",
+    Down="2",       
+    Left="3",
+    Right="4"
+}
+var dir:Direction1=Direction1.Left;
+
+console.log(dir);
+
+enum Roles{
+admin
+manager,
+developer,
+user
+}
+
+var userRole:Roles=Roles.admin;
+
+console. log(userRole);
+
+//------------------------classes in typescript--------------------------
+class Person{
+    id:number;
+    name:string;    
+    constructor(id:number,name:string){
+        this.id=id;
+        this.name=name;        
+    }
+    display():void{
+        console.log(`ID: ${this.id}, Name: ${this.name}`);
+    }
+}
+
+var person1:Person=new Person(1,'Harshit Wadichar');
+person1.display();
