@@ -339,3 +339,37 @@ class Person{
 
 var person1:Person=new Person(1,'Harshit Wadichar');
 person1.display();
+
+//------------------------Access Modifiers  --------------------------
+class EmployeeAccess{
+    public id:number;
+    private name:string;
+    protected salary:number;
+    constructor(id:number,name:string,salary:number){
+        this.id=id;
+        this.name=name;
+        this.salary=salary;
+    }
+    display():void{
+        console.log(`ID: ${this.id}, Name: ${this.name}, Salary: ${this.salary}`);
+    }
+}
+var empAccess:EmployeeAccess=new EmployeeAccess(1,'Anil Sidhu',50000);
+empAccess.display();
+console.log(empAccess.id); // accessible
+//console.log(empAccess.name); // Error: Property 'name' is private
+//console.log(empAccess.salary); // Error: Property 'salary' is protected
+class Manager extends EmployeeAccess{
+    constructor(id:number,name:string,salary:number){
+        super(id,name,salary);
+    }
+    showSalary():void{
+        console.log(`Salary: ${this.salary}`); // accessible
+    }
+}
+var mgr:Manager=new Manager(2,'Harshit Wadichar',80000);
+mgr.showSalary();
+mgr.display();
+console.log(mgr.id); // accessible
+//console.log(mgr.name); // Error: Property 'name' is private
+//console.log(mgr.salary); // Error: Property 'salary' is protected
