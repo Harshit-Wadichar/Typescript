@@ -373,3 +373,25 @@ mgr.display();
 console.log(mgr.id); // accessible
 //console.log(mgr.name); // Error: Property 'name' is private
 //console.log(mgr.salary); // Error: Property 'salary' is protected
+
+//-----------------------inheritance in typescript--------------------------
+class Animal{
+    name:string;
+    constructor(name:string){
+        this.name=name;
+    }
+    makeSound():void{
+        console.log("Some generic sound");
+    }
+}
+class Dog extends Animal{
+    constructor(name:string){
+        super(name);
+    }   
+    makeSound():void{
+        console.log("Bark");
+    }
+}
+var dog:Dog=new Dog("Buddy");
+dog.makeSound();
+console.log(dog.name);
