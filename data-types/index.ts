@@ -395,3 +395,14 @@ class Dog extends Animal{
 var dog:Dog=new Dog("Buddy");
 dog.makeSound();
 console.log(dog.name);
+
+
+//------------------------ Modules in TypeScript  --------------------------
+import { greet } from './greetings.js'; 
+greet('Harshit');
+import { PI, calculateArea } from './mathUtils.js';
+console.log(`Value of PI: ${PI}`);
+console.log(`Area of circle with radius 5: ${calculateArea(5)}`);
+import { Person as PersonModule } from './personModule.js';
+var personModule:PersonModule=new PersonModule(1,'Harshit Wadichar');
+personModule.display();
