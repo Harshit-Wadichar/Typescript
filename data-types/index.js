@@ -1,3 +1,18 @@
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 //-- primitive data types
 var num = 10;
 var num = 10.10;
@@ -249,3 +264,98 @@ var Person = /** @class */ (function () {
 }());
 var person1 = new Person(1, 'Harshit Wadichar');
 person1.display();
+//------------------------Access Modifiers  --------------------------
+var EmployeeAccess = /** @class */ (function () {
+    function EmployeeAccess(id, name, salary) {
+        this.id = id;
+        this.name = name;
+        this.salary = salary;
+    }
+    EmployeeAccess.prototype.display = function () {
+        console.log("ID: ".concat(this.id, ", Name: ").concat(this.name, ", Salary: ").concat(this.salary));
+    };
+    return EmployeeAccess;
+}());
+var empAccess = new EmployeeAccess(1, 'Anil Sidhu', 50000);
+empAccess.display();
+console.log(empAccess.id); // accessible
+//console.log(empAccess.name); // Error: Property 'name' is private
+//console.log(empAccess.salary); // Error: Property 'salary' is protected
+var Manager = /** @class */ (function (_super) {
+    __extends(Manager, _super);
+    function Manager(id, name, salary) {
+        return _super.call(this, id, name, salary) || this;
+    }
+    Manager.prototype.showSalary = function () {
+        console.log("Salary: ".concat(this.salary)); // accessible
+    };
+    return Manager;
+}(EmployeeAccess));
+var mgr = new Manager(2, 'Harshit Wadichar', 80000);
+mgr.showSalary();
+mgr.display();
+console.log(mgr.id); // accessible
+//console.log(mgr.name); // Error: Property 'name' is private
+//console.log(mgr.salary); // Error: Property 'salary' is protected
+//-----------------------inheritance in typescript--------------------------
+var Animal = /** @class */ (function () {
+    function Animal(name) {
+        this.name = name;
+    }
+    Animal.prototype.makeSound = function () {
+        console.log("Some generic sound");
+    };
+    return Animal;
+}());
+var Dog = /** @class */ (function (_super) {
+    __extends(Dog, _super);
+    function Dog(name) {
+        return _super.call(this, name) || this;
+    }
+    Dog.prototype.makeSound = function () {
+        console.log("Bark");
+    };
+    return Dog;
+}(Animal));
+var dog = new Dog("Buddy");
+dog.makeSound();
+console.log(dog.name);
+//------------------------ Modules in TypeScript  --------------------------
+//import { greet } from './greetings.js'; 
+//greet('Harshit');
+//import kamlesh from './module/module.js';
+//kamlesh();
+//------------------------ Getters and Setters in TypeScript --------------------------
+var Circle = /** @class */ (function () {
+    function Circle(radius) {
+        this._radius = radius;
+    }
+    Object.defineProperty(Circle.prototype, "radius", {
+        get: function () {
+            return this._radius;
+        },
+        set: function (radius) {
+            if (radius <= 0) {
+                throw new Error("Radius must be positive");
+            }
+            this._radius = radius;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(Circle.prototype, "area", {
+        get: function () {
+            return Math.PI * this._radius * this._radius;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    return Circle;
+}());
+var circle = new Circle(5);
+console.log("Radius: ".concat(circle.radius));
+console.log("Area: ".concat(circle.area));
+circle.radius = 10;
+console.log("Updated Radius: ".concat(circle.radius));
+console.log("Updated Area: ".concat(circle.area));
+//circle.radius=-5; // Error: Radius must be positive

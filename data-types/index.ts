@@ -398,11 +398,36 @@ console.log(dog.name);
 
 
 //------------------------ Modules in TypeScript  --------------------------
-import { greet } from './greetings.js'; 
-greet('Harshit');
-import { PI, calculateArea } from './mathUtils.js';
-console.log(`Value of PI: ${PI}`);
-console.log(`Area of circle with radius 5: ${calculateArea(5)}`);
-import { Person as PersonModule } from './personModule.js';
-var personModule:PersonModule=new PersonModule(1,'Harshit Wadichar');
-personModule.display();
+//import { greet } from './greetings.js'; 
+//greet('Harshit');
+
+//import kamlesh from './module/module.js';
+//kamlesh();
+
+//------------------------ Getters and Setters in TypeScript --------------------------
+class Circle{
+    private _radius:number;
+    constructor(radius:number){
+        this._radius=radius;
+    }
+    get radius():number{
+        return this._radius;
+    }
+    set radius(radius:number){
+        if(radius<=0){
+            throw new Error("Radius must be positive");
+        }
+        this._radius=radius;
+    }
+    get area():number{
+        return Math.PI*this._radius*this._radius;
+    }
+}
+
+var circle:Circle=new Circle(5);
+console.log(`Radius: ${circle.radius}`);
+console.log(`Area: ${circle.area}`);
+circle.radius=10;
+console.log(`Updated Radius: ${circle.radius}`);
+console.log(`Updated Area: ${circle.area}`);
+//circle.radius=-5; // Error: Radius must be positive
