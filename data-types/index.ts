@@ -431,3 +431,98 @@ circle.radius=10;
 console.log(`Updated Radius: ${circle.radius}`);
 console.log(`Updated Area: ${circle.area}`);
 //circle.radius=-5; // Error: Radius must be positive
+
+
+//---------------------------Interface in classes--------------------------
+interface Shape{
+    area():number;
+    perimeter():number;
+}
+class Rectangle implements Shape{
+    width:number;
+    height:number;
+    constructor(width:number,height:number){
+        this.width=width;
+        this.height=height;
+    }
+    area():number{
+        return this.width*this.height;
+    }
+    perimeter():number{
+        return 2*(this.width+this.height);
+    }
+}
+var rectangle:Rectangle=new Rectangle(10,20);
+console.log(`Area: ${rectangle.area()}`);
+console.log(`Perimeter: ${rectangle.perimeter()}`);
+
+//-------------------------Static Keyword in TypeScript--------------------------
+class MathUtil{
+    static PI:number=3.14159;
+    static calculateCircumference(radius:number):number{
+        return 2*MathUtil.PI*radius;
+    }
+}
+
+console.log(`Circumference: ${MathUtil.calculateCircumference(10)}`);
+
+//-------------------------Typegaurd in typescript--------------------------
+function padLeft(value:string,padding:string|number){
+    if(typeof padding ==='number'){
+        return ' '.repeat(padding)+value;
+    }
+    if(typeof padding ==='string'){
+        return padding+value;
+    }   
+    throw new Error(`Expected string or number, got '${typeof padding}'`);
+}
+
+console.log(padLeft("Hello",4));
+console.log(padLeft("Hello","***"));
+//console.log(padLeft("Hello",true)); // Error: Expected string or number, got 'boolean'
+
+//-------------------------Generic in TypeScript--------------------------
+function identity<T>(arg:T):T{
+    return arg;
+}
+console.log(identity<number>(100));
+console.log(identity<string>("Harshit"));   
+function getArrayLength<T>(arr:T[]):number{
+    return arr.length;
+}
+console.log(getArrayLength<number>([1,2,3,4,5]));
+console.log(getArrayLength<string>(['a','b','c']));
+
+
+//-------------------------KeyOf in typescript--------------------------
+interface PersonInfo{
+    id:number;
+    name:string;
+    age:number;
+}
+function getProperty<T,K extends keyof T>(obj:T,key:K){
+    return obj[key];
+}
+var personInfo:PersonInfo={id:1,name:'Anil',age:30};
+console.log(getProperty<PersonInfo,'name'>(personInfo,'name'));
+console.log(getProperty<PersonInfo,'age'>(personInfo,'age'));
+//console.log(getProperty<PersonInfo,'salary'>(personInfo,'salary')); // Error: Type '"salary"' is not assignable to parameter of type '"id" | "name" | "age"'.
+
+
+//-------------------------Index signature in TypeScript--------------------------
+interface StringArray{
+    [index:number]:string;
+}
+var myArray:StringArray;
+myArray=['Anil','Harshit','Kamlesh'];
+console.log(myArray[0]);
+console.log(myArray[1]);
+
+interface StringDictionary{
+    [key:string]:string;
+}
+var myDict:StringDictionary={};
+myDict['name']='kamlesh';
+myDict['city']='Noida';
+console.log(myDict['name']);
+console.log(myDict['city']);

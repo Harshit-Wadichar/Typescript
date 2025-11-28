@@ -358,4 +358,69 @@ console.log("Area: ".concat(circle.area));
 circle.radius = 10;
 console.log("Updated Radius: ".concat(circle.radius));
 console.log("Updated Area: ".concat(circle.area));
-//circle.radius=-5; // Error: Radius must be positive
+var Rectangle = /** @class */ (function () {
+    function Rectangle(width, height) {
+        this.width = width;
+        this.height = height;
+    }
+    Rectangle.prototype.area = function () {
+        return this.width * this.height;
+    };
+    Rectangle.prototype.perimeter = function () {
+        return 2 * (this.width + this.height);
+    };
+    return Rectangle;
+}());
+var rectangle = new Rectangle(10, 20);
+console.log("Area: ".concat(rectangle.area()));
+console.log("Perimeter: ".concat(rectangle.perimeter()));
+//-------------------------Static Keyword in TypeScript--------------------------
+var MathUtil = /** @class */ (function () {
+    function MathUtil() {
+    }
+    MathUtil.calculateCircumference = function (radius) {
+        return 2 * MathUtil.PI * radius;
+    };
+    MathUtil.PI = 3.14159;
+    return MathUtil;
+}());
+console.log("Circumference: ".concat(MathUtil.calculateCircumference(10)));
+//-------------------------Typegaurd in typescript--------------------------
+function padLeft(value, padding) {
+    if (typeof padding === 'number') {
+        return ' '.repeat(padding) + value;
+    }
+    if (typeof padding === 'string') {
+        return padding + value;
+    }
+    throw new Error("Expected string or number, got '".concat(typeof padding, "'"));
+}
+console.log(padLeft("Hello", 4));
+console.log(padLeft("Hello", "***"));
+//console.log(padLeft("Hello",true)); // Error: Expected string or number, got 'boolean'
+//-------------------------Generic in TypeScript--------------------------
+function identity(arg) {
+    return arg;
+}
+console.log(identity(100));
+console.log(identity("Harshit"));
+function getArrayLength(arr) {
+    return arr.length;
+}
+console.log(getArrayLength([1, 2, 3, 4, 5]));
+console.log(getArrayLength(['a', 'b', 'c']));
+function getProperty(obj, key) {
+    return obj[key];
+}
+var personInfo = { id: 1, name: 'Anil', age: 30 };
+console.log(getProperty(personInfo, 'name'));
+console.log(getProperty(personInfo, 'age'));
+var myArray;
+myArray = ['Anil', 'Harshit', 'Kamlesh'];
+console.log(myArray[0]);
+console.log(myArray[1]);
+var myDict = {};
+myDict['name'] = 'kamlesh';
+myDict['city'] = 'Noida';
+console.log(myDict['name']);
+console.log(myDict['city']);
