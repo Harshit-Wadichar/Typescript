@@ -526,3 +526,31 @@ myDict['name']='kamlesh';
 myDict['city']='Noida';
 console.log(myDict['name']);
 console.log(myDict['city']);
+
+//----------------------------------utility types in typescript--------------------------
+interface UserProfile{
+    id:number;
+    name:string;
+    email:string;
+    isAdmin:boolean;
+}
+type UserProfilePreview=Pick<UserProfile,'id'|'name'|'email'>;
+var userPreview:UserProfilePreview={
+    id:1,
+    name:'Anil',
+    email:'something@gmail.com'
+};
+console.log(userPreview);
+type UserProfileOptional=Partial<UserProfile>;
+var userOptional:UserProfileOptional={
+    name:'Harshit'
+};
+console.log(userOptional);
+type UserProfileRequired=Required<Partial<UserProfile>>;
+var userRequired:UserProfileRequired={
+    id:1,
+    name:'Kamlesh',
+    email:'something',
+    isAdmin:true
+};
+console.log(userRequired);
