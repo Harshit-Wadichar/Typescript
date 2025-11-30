@@ -534,6 +534,7 @@ interface UserProfile{
     email:string;
     isAdmin:boolean;
 }
+
 type UserProfilePreview=Pick<UserProfile,'id'|'name'|'email'>;
 var userPreview:UserProfilePreview={
     id:1,
@@ -541,11 +542,13 @@ var userPreview:UserProfilePreview={
     email:'something@gmail.com'
 };
 console.log(userPreview);
+
 type UserProfileOptional=Partial<UserProfile>;
 var userOptional:UserProfileOptional={
     name:'Harshit'
 };
 console.log(userOptional);
+
 type UserProfileRequired=Required<Partial<UserProfile>>;
 var userRequired:UserProfileRequired={
     id:1,
@@ -554,3 +557,159 @@ var userRequired:UserProfileRequired={
     isAdmin:true
 };
 console.log(userRequired);
+
+//readonly
+type ReadonlyUserProfile=Readonly<UserProfile>;
+var readonlyUser:ReadonlyUserProfile={
+    id:1,
+    name:'Anil',
+    email:'hhhhh',
+    isAdmin:false
+};
+console.log(readonlyUser);
+//readonlyUser.name='New Name'; // Error: Cannot assign to 'name' because it is a read-only property.
+
+//pick
+type UserContactInfo=Pick<UserProfile,'email'>;
+var userContact:UserContactInfo={
+    email:'hhhh',
+};
+console.log(userContact);
+//omit
+type UserNonContactInfo=Omit<UserProfile,'email'>;
+var userNonContact:UserNonContactInfo={
+    id:2,
+    name:'Harshit',
+    isAdmin:true
+};
+console.log(userNonContact);
+//record
+type UserRoles= 'admin' | 'editor' | 'viewer';
+type UserRoleMap=Record<UserRoles,number>;
+var userRoles:UserRoleMap={
+    admin:1,
+    editor:2,
+    viewer:3
+};
+console.log(userRoles);
+//exclude
+type Primitive= string | number | boolean | null | undefined;
+type NonNullablePrimitive=Exclude<Primitive,null|undefined>;
+var nonNullableValue:NonNullablePrimitive='Hello';
+console.log(nonNullableValue);
+//extract
+type MixedTypes= string | number | boolean;
+type StringTypes=Extract<MixedTypes,string>;
+var stringValue:StringTypes='World';
+console.log(stringValue);
+//nonnullable
+type NullableTypes= string | number | null | undefined;
+type NonNullableTypes=NonNullable<NullableTypes>;
+var nonNullableTypeValue:NonNullableTypes=42;
+console.log(nonNullableTypeValue);
+
+//-------------------------Namespaces in TypeScript--------------------------
+namespace Geometry{
+    export class Circle{
+        radius:number;
+        constructor(radius:number){
+            this.radius=radius;
+        }
+        area():number{
+            return Math.PI*this.radius*this.radius;
+        }
+    }
+
+    export class Square{
+        side:number;
+        constructor(side:number){
+            this.side=side;
+        }
+        area():number{
+            return this.side*this.side;
+        }
+    }
+}
+var circle:Geometry.Circle=new Geometry.Circle(5);
+console.log(`Circle Area: ${circle.area()}`);
+var square:Geometry.Square=new Geometry.Square(4);
+console.log(`Square Area: ${square.area()}`);
+
+//-------------------------Decorators in TypeScript--------------------------
+/*
+function Log(_target:any,propertyKey:string,descriptor:PropertyDescriptor):void{
+    const originalMethod=descriptor.value;
+    descriptor.value=function(...args:any[]){
+        console.log(`Method ${propertyKey} called with args: ${JSON.stringify(args)}`);
+        const result=originalMethod.apply(this,args);
+        console.log(`Method ${propertyKey} returned: ${JSON.stringify(result)}`);
+        return result;
+    }
+}
+class Calculator{
+    @Log
+    add(a:number,b:number):number{
+        return a+b;
+    }
+    @Log
+    multiply(a:number,b:number):number{
+        return a*b;
+    }
+}
+var calculator:Calculator=new Calculator();
+calculator.add(2,3);
+calculator.multiply(4,5);
+*/
+
+//-------------------------override function with decorators in TypeScript--------------------------
+
+/*
+function Override(target: any, propertyKey: string, descriptor: PropertyDescriptor): void {
+    descriptor.value = function(...args: any[]) {
+        console.log(`Overridden method ${propertyKey} called with args: ${JSON.stringify(args)}`);
+        return "This method has been overridden.";
+    }   
+}
+class Greeter {
+    @Override
+    greet(name: string): string {
+        return `Hello, ${name}!`;
+    }
+}
+var greeter: Greeter = new Greeter();
+console.log(greeter.greet("Harshit"));
+*/
+
+//-------------------------Types promised in TypeScript--------------------------
+function fetchData(): Promise<string> {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            resolve("Data fetched successfully!");
+        }, 2000);
+    });
+}
+fetchData().then((data: string) => {
+    console.log(data);
+}).catch((error: any) => {
+    console.error("Error fetching data:", error);
+});
+
+
+//--------------------------API call with typescript--------------------------
+interface ApiResponse{
+    userId:number;
+    id:number;
+    title:string;
+    completed:boolean;
+}
+async function getApiData(url:string):Promise<ApiResponse>{
+    const response=await fetch(url);
+    const data:ApiResponse=await response.json();
+    return data;
+}
+getApiData('https://jsonplaceholder.typicode.com/todos/1').then((data:ApiResponse)=>{
+    console.log(data);
+}).catch((error:any)=>{
+    console.error("Error fetching API data:",error);
+});
+
